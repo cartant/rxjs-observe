@@ -19,23 +19,23 @@ describe("observe", () => {
 
         it("should observe properties", () => {
             const person = new Person(32, "Alice");
-            const observables = observe(person);
+            const { observables, proxy } = observe(person);
             const received: (number | string)[] = [];
             observables.age.subscribe(value => received.push(value));
             observables.name.subscribe(value => received.push(value));
             expect(received).to.deep.equal([]);
-            observables.proxy.age = 42;
-            observables.proxy.name = "Bob";
+            proxy.age = 42;
+            proxy.name = "Bob";
             expect(received).to.deep.equal([42, "Bob"]);
         });
 
         it("should observe functions", () => {
             const person = new Person(32, "Alice");
-            const observables = observe(person);
+            const { observables, proxy } = observe(person);
             const called: any[][] = [];
             observables.greet.subscribe(args => called.push(args));
             expect(called).to.deep.equal([]);
-            observables.proxy.greet("Hi");
+            proxy.greet("Hi");
             expect(called).to.deep.equal([["Hi"]]);
         });
     });
@@ -47,11 +47,11 @@ describe("observe", () => {
             name$: Observable<string>;
             greet$: Observable<any[]>;
             constructor(public age: number, public name: string) {
-                const observables = observe<Person>(this);
+                const { observables, proxy } = observe<Person>(this);
                 this.age$ = observables.age;
                 this.name$ = observables.name;
                 this.greet$ = observables.greet;
-                return observables.proxy;
+                return proxy;
             }
             greet(greeting: string): string { return `${greeting}, ${this.name}.`; }
         }

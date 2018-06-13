@@ -6,8 +6,11 @@
 import { Observable, Subject } from "rxjs";
 
 export function observe<T extends object>(instance: T): {
-    [K in keyof T]: T[K] extends Function ? Observable<any[]> : Observable<T[K]>
-} & { proxy: T } {
+    observables: {
+        [K in keyof T]: T[K] extends Function ? Observable<any[]> : Observable<T[K]>
+    },
+    proxy: T
+} {
 
     const subjects: { [key: string]: Subject<any> } = {};
 
@@ -35,16 +38,16 @@ export function observe<T extends object>(instance: T): {
         }
     });
 
-    return new Proxy({ proxy } as any, {
-        get(target: any, name: string): any {
-            if (name === "proxy") {
-                return target[name];
+    return {
+        observables: new Proxy({} as any, {
+            get(target: any, name: string): any {
+                let subject = subjects[name];
+                if (!subject) {
+                    subjects[name] = subject = new Subject<any>();
+                }
+                return subject.asObservable();
             }
-            let subject = subjects[name];
-            if (!subject) {
-                subjects[name] = subject = new Subject<any>();
-            }
-            return subject.asObservable();
-        }
-    });
+        }),
+        proxy
+    };
 }
