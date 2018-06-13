@@ -39,7 +39,7 @@ export function observe<T extends object>(instance: T): {
     });
 
     return {
-        observables: new Proxy({} as any, {
+        observables: new Proxy({}, {
             get(target: any, name: string): any {
                 let subject = subjects[name];
                 if (!subject) {
