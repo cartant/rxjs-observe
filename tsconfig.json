@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "importHelpers": false,
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitHelpers": false,
+    "noImplicitAny": true,
+    "outDir": "build",
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es2015"
+  },
+  "exclude": [],
+  "include": [
+    "source/**/*.ts"
+  ]
+}
