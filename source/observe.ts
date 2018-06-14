@@ -19,21 +19,22 @@ export function observe<T extends object>(instance: T): {
             let value = target[name];
             if (typeof value === "function") {
                 value = function (this: any, ...args: any[]): any {
+                    const result = target[name].apply(this, args);
                     const subject = subjects[name];
                     if (subject) {
                         subject.next(args);
                     }
-                    return target[name].apply(this, args);
+                    return result;
                 };
             }
             return value;
         },
         set(target: any, name: string, value: any): boolean {
+            target[name] = value;
             const subject = subjects[name];
             if (subject) {
                 subject.next(value);
             }
-            target[name] = value;
             return true;
         }
     });
