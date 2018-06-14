@@ -4,7 +4,7 @@
     "url": "https://github.com/cartant/rxjs-observe/issues"
   },
   "dependencies": {},
-  "description": "Observables and operators for RxJS",
+  "description": "A library for observing an object's property assignments and method calls",
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/mocha": "^5.0.0",
