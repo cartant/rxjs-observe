@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-observe
  */
 
-import { Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 export function observe<T extends object>(instance: T): {
     observables: {
@@ -43,7 +43,9 @@ export function observe<T extends object>(instance: T): {
             get(target: any, name: string): any {
                 let subject = subjects[name];
                 if (!subject) {
-                    subjects[name] = subject = new Subject<any>();
+                    subjects[name] = subject = (typeof instance[name] === "function") ?
+                        new Subject<any>() :
+                        new BehaviorSubject<any>(instance[name]);
                 }
                 return subject.asObservable();
             }

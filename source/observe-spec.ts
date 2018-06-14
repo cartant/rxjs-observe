@@ -20,23 +20,43 @@ describe("observe", () => {
         it("should observe properties", () => {
             const person = new Person(32, "Alice");
             const { observables, proxy } = observe(person);
-            const received: (number | string)[] = [];
-            observables.age.subscribe(value => received.push(value));
-            observables.name.subscribe(value => received.push(value));
-            expect(received).to.deep.equal([]);
+            const values: (number | string)[] = [];
+            observables.age.subscribe(value => values.push(value));
+            observables.name.subscribe(value => values.push(value));
+            expect(values).to.deep.equal([32, "Alice"]);
             proxy.age = 42;
             proxy.name = "Bob";
-            expect(received).to.deep.equal([42, "Bob"]);
+            expect(values).to.deep.equal([32, "Alice", 42, "Bob"]);
         });
 
         it("should observe functions", () => {
             const person = new Person(32, "Alice");
             const { observables, proxy } = observe(person);
-            const called: any[][] = [];
-            observables.greet.subscribe(args => called.push(args));
-            expect(called).to.deep.equal([]);
+            const calls: any[][] = [];
+            observables.greet.subscribe(args => calls.push(args));
+            expect(calls).to.deep.equal([]);
             proxy.greet("Hi");
-            expect(called).to.deep.equal([["Hi"]]);
+            expect(calls).to.deep.equal([["Hi"]]);
+        });
+
+        it("should replay properties", () => {
+            const person = new Person(32, "Alice");
+            const { observables, proxy } = observe(person);
+            proxy.age = 42;
+            proxy.name = "Bob";
+            const values: (number | string)[] = [];
+            observables.age.subscribe(value => values.push(value));
+            observables.name.subscribe(value => values.push(value));
+            expect(values).to.deep.equal([42, "Bob"]);
+        });
+
+        it("should not replay functions", () => {
+            const person = new Person(32, "Alice");
+            const { observables, proxy } = observe(person);
+            proxy.greet("Hi");
+            const calls: any[][] = [];
+            observables.greet.subscribe(args => calls.push(args));
+            expect(calls).to.deep.equal([]);
         });
     });
 
@@ -60,23 +80,23 @@ describe("observe", () => {
             const person = new Person(32, "Alice");
             expect(person).to.have.property("age$");
             expect(person).to.have.property("name$");
-            const received: (number | string)[] = [];
-            person.age$.subscribe(value => received.push(value));
-            person.name$.subscribe(value => received.push(value));
-            expect(received).to.deep.equal([]);
+            const values: (number | string)[] = [];
+            person.age$.subscribe(value => values.push(value));
+            person.name$.subscribe(value => values.push(value));
+            expect(values).to.deep.equal([32, "Alice"]);
             person.age = 42;
             person.name = "Bob";
-            expect(received).to.deep.equal([42, "Bob"]);
+            expect(values).to.deep.equal([32, "Alice", 42, "Bob"]);
         });
 
         it("should observe functions", () => {
             const person = new Person(32, "Alice");
             expect(person).to.have.property("greet$");
-            const called: any[][] = [];
-            person.greet$.subscribe(args => called.push(args));
-            expect(called).to.deep.equal([]);
+            const calls: any[][] = [];
+            person.greet$.subscribe(args => calls.push(args));
+            expect(calls).to.deep.equal([]);
             person.greet("Hi");
-            expect(called).to.deep.equal([["Hi"]]);
+            expect(calls).to.deep.equal([["Hi"]]);
         });
     });
 });
