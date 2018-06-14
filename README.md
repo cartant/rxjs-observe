@@ -24,6 +24,8 @@ Install the package using NPM:
 npm install rxjs-observe --save
 ```
 
+TypeScript 2.8 or later is required, as the type declaration for `observe` uses conditional types.
+
 ## Usage
 
 Pass an object instance to `observe` and receive an `observables` object - that contains observable sources for the object's properties and methods - and a `proxy`:
@@ -62,3 +64,5 @@ class SomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 }
 ```
+
+However, such a component implementation is ... unconventional, so proceed with caution, but ... YOLO.
