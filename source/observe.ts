@@ -11,16 +11,14 @@ export function observe<T extends object>(instance: T): {
     },
     proxy: T
 } {
-
-    const subjects: { [key: string]: Subject<any> } = {};
-
+    const subjects = new Map<string | symbol, Subject<any>>();
     const proxy = new Proxy(instance, {
-        get(target: any, name: string): any {
+        get(target: any, name: string | symbol): any {
             let value = target[name];
             if (typeof value === "function") {
                 value = function (this: any, ...args: any[]): any {
                     const result = target[name].apply(this, args);
-                    const subject = subjects[name];
+                    const subject = subjects.get(name);
                     if (subject) {
                         subject.next(args);
                     }
@@ -29,24 +27,24 @@ export function observe<T extends object>(instance: T): {
             }
             return value;
         },
-        set(target: any, name: string, value: any): boolean {
+        set(target: any, name: string | symbol, value: any): boolean {
             target[name] = value;
-            const subject = subjects[name];
+            const subject = subjects.get(name);
             if (subject) {
                 subject.next(value);
             }
             return true;
         }
     });
-
     return {
         observables: new Proxy({}, {
-            get(target: any, name: string): any {
-                let subject = subjects[name];
+            get(target: any, name: string | symbol): any {
+                let subject = subjects.get(name);
                 if (!subject) {
-                    subjects[name] = subject = (typeof instance[name] === "function") ?
+                    subject = (typeof instance[name] === "function") ?
                         new Subject<any>() :
                         new BehaviorSubject<any>(instance[name]);
+                    subjects.set(name, subject);
                 }
                 return subject.asObservable();
             }

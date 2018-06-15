@@ -12,7 +12,9 @@ describe("observe", () => {
 
     describe("outside a constructor", () => {
 
+        const job = Symbol("job");
         class Person {
+            [job]: string;
             constructor(public age: number, public name: string) {}
             greet(greeting: string): string { return `${greeting}, ${this.name}.`; }
         }
@@ -57,6 +59,13 @@ describe("observe", () => {
             const calls: any[][] = [];
             observables.greet.subscribe(args => calls.push(args));
             expect(calls).to.deep.equal([]);
+        });
+
+        it("should support symbols", () => {
+            const person = new Person(32, "Alice");
+            person[job] = "engineer";
+            const { observables } = observe(person);
+            observables[job].subscribe(value => expect(value).to.equal("engineer"));
         });
     });
 
