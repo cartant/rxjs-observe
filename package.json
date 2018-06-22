@@ -23,7 +23,7 @@
     "rxjs": "^6.0.0",
     "rxjs-tslint-rules": "^4.0.0",
     "ts-loader": "^4.0.0",
-    "ts-node": "^6.0.2",
+    "ts-node": "^7.0.0",
     "tslint": "^5.1.0",
     "tslint-etc": "^1.2.0",
     "typescript": "~2.9.1",
