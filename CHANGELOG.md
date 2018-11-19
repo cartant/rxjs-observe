@@ -1,3 +1,10 @@
+<a name="2.0.0"></a>
+## [2.0.0](https://github.com/cartant/rxjs-observe/compare/v1.0.2...v2.0.0) (2018-11-19)
+
+### Breaking Changes
+
+* Strongly type function parameters - which requires TypeScript 3.0 or later. ([e0c298f](https://github.com/cartant/rxjs-observe/commit/e0c298f))
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/cartant/rxjs-observe/compare/v1.0.1...v1.0.2) (2018-06-15)
 
