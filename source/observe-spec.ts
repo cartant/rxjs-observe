@@ -74,7 +74,7 @@ describe("observe", () => {
         class Person {
             age$: Observable<number>;
             name$: Observable<string>;
-            greet$: Observable<any[]>;
+            greet$: Observable<[string]>;
             constructor(public age: number, public name: string) {
                 const { observables, proxy } = observe<Person>(this);
                 this.age$ = observables.age;

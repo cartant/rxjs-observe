@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 export function observe<T extends object>(instance: T): {
     observables: {
-        [K in keyof T]: T[K] extends Function ? Observable<any[]> : Observable<T[K]>
+        [K in keyof T]: T[K] extends (...args: infer U) => any ? Observable<U> : Observable<T[K]>
     },
     proxy: T
 } {
