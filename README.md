@@ -24,7 +24,7 @@ Install the package using NPM:
 npm install rxjs-observe --save
 ```
 
-TypeScript 2.8 or later is required, as the type declaration for `observe` uses conditional types.
+TypeScript 3.0 or later is required, as the type declaration for `observe` uses [generic rest parameters](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#generic-rest-parameters).
 
 ## Usage
 
