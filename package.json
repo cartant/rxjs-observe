@@ -27,7 +27,7 @@
     "tslint": "^5.1.0",
     "tslint-etc": "^1.2.0",
     "typescript": "~3.1.6",
-    "webpack": "^4.0.0",
+    "webpack": "^4.28.4",
     "webpack-cli": "^3.0.0",
     "webpack-rxjs-externals": "^2.0.0"
   },
