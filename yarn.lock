@@ -3596,17 +3596,17 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs-tslint-rules@^4.0.0:
-  version "4.18.1"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.18.1.tgz#a9a6270a085311f6579ea8fab3b70248fd34a33f"
-  integrity sha512-NQO34MalznGrKE5Ow8l1KtXYjE7C7DemYFy3OIOHvDNgTEtIr77Pu0xxffJ4drHm1GPUTFoZDYFHbEadvzR7jw==
+rxjs-tslint-rules@^4.18.2:
+  version "4.18.2"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.18.2.tgz#5acd6937d9cf337fb5de39f9fde581c00188f3d9"
+  integrity sha512-pGcCuslwUp6QQpcHMrBugB1FiCNHBH/5PWOG7LnhBAT3BLQMbiy+I71Zeh6Tbw2x8e9hsxLZ85QYSqjSx+bb3w==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
     decamelize "^2.0.0"
     resolve "^1.4.0"
     tslib "^1.8.0"
     tsutils "^3.0.0"
-    tsutils-etc "^1.0.0"
+    tsutils-etc "^1.1.0"
 
 rxjs@^6.0.0:
   version "6.4.0"
@@ -4189,6 +4189,11 @@ tsutils-etc@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.0.1.tgz#2114f1b41a1d7ad5498690f011a18fa989ebffad"
   integrity sha512-Yp6RQzPfxuZNjw/tHYdr+QRHtoPX2Al+9UmydyMidGqKt3Y13lJhryLUNPxYce5Y8KQ0Q6qn2MLJIxwL48GBWg==
+
+tsutils-etc@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.1.0.tgz#82ce1c92da29e07d3cde95692d5c5e8dbdc92fd0"
+  integrity sha512-pJlLtLmQPUyGHqY/Pq6EGnpGmQCnnTDZetQ7eWkeQ5xaw4GtfcR1Zt7HMKFHGDDp53HzQfbqQ+7ps6iJbfa9Hw==
 
 tsutils@^2.27.2:
   version "2.29.0"
