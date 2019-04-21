@@ -25,14 +25,15 @@ export function observe<T extends object, C extends object>(
   const subjects = new Map<string | symbol, Subject<any>>();
   const proxy = new Proxy(instance, {
     get(target: any, name: string | symbol) {
-      let value =
-        defaultedCallbacks[name] && !target[name]
-          ? defaultedCallbacks[name]
-          : target[name];
+      const callbacksValue = defaultedCallbacks[name];
+      const targetValue = target[name];
+      let value = callbacksValue && !targetValue
+          ? callbacksValue
+          : targetValue;
       if (typeof value === "function") {
-        const func = value;
+        const functionValue = value;
         value = function(this: any, ...args: any[]): any {
-          const result = func.apply(this, args);
+          const result = functionValue.apply(this, args);
           const subject = subjects.get(name);
           if (subject) {
             subject.next(args);
