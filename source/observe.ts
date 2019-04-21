@@ -19,7 +19,7 @@ export function observe<T extends object, C extends object>(
         ? Observable<U>
         : Observable<C[K]>
     };
-  proxy: T;
+  proxy: T & C;
 } {
   const defaultedCallbacks: {} = callbacks || {};
   const subjects = new Map<string | symbol, Subject<any>>();
