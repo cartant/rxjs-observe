@@ -5,20 +5,22 @@
 
 import { BehaviorSubject, noop, Observable, Subject } from "rxjs";
 
+export type Observables<T extends object, C extends object = {}> = {
+  [K in keyof T]: T[K] extends (...args: infer U) => any
+    ? Observable<U>
+    : Observable<T[K]>
+} &
+  {
+    [K in keyof C]: C[K] extends (...args: infer U) => any
+      ? Observable<U>
+      : Observable<C[K]>
+  };
+
 export function observe<T extends object, C extends object>(
   instance: T,
   callbacks?: C
 ): {
-  observables: {
-    [K in keyof T]: T[K] extends (...args: infer U) => any
-      ? Observable<U>
-      : Observable<T[K]>
-  } &
-    {
-      [K in keyof C]: C[K] extends (...args: infer U) => any
-        ? Observable<U>
-        : Observable<C[K]>
-    };
+  observables: Observables<T, C>;
   proxy: T & C;
 } {
   const defaultedCallbacks: {} = callbacks || {};
@@ -27,9 +29,7 @@ export function observe<T extends object, C extends object>(
     get(target: any, name: string | symbol) {
       const callbacksValue = defaultedCallbacks[name];
       const targetValue = target[name];
-      let value = callbacksValue && !targetValue
-          ? callbacksValue
-          : targetValue;
+      let value = callbacksValue && !targetValue ? callbacksValue : targetValue;
       if (typeof value === "function") {
         const functionValue = value;
         value = function(this: any, ...args: any[]): any {
