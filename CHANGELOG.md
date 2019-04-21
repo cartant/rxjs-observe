@@ -1,3 +1,10 @@
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/cartant/rxjs-observe/compare/v2.1.2...v2.1.3) (2019-04-21)
+
+### Changes
+
+* Lookup callback and target values - in the `get` handler - only once. ([4e73a89](https://github.com/cartant/rxjs-observe/commit/4e73a89))
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/cartant/rxjs-observe/compare/v2.1.1...v2.1.2) (2019-04-21)
 
