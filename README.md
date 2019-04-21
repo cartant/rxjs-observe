@@ -67,8 +67,8 @@ class SomeComponent {
   @Input() public name: string;
   constructor() {
     const { observables, proxy } = observe(this as SomeComponent, {
-      ngOnInit: callback<OnInit>(),
-      ngOnDestroy: callback<OnDestroy>()
+      ngOnInit: callback(),
+      ngOnDestroy: callback()
     });
     observables.ngOnInit.pipe(
       switchMapTo(observables.name),
