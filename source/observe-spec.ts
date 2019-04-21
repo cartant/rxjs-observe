@@ -2,11 +2,11 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-observe
  */
-/*tslint:disable:no-unused-expression*/
+/*tslint:disable:no-unused-expression rxjs-no-ignored-subscription*/
 
 import { expect } from "chai";
 import { Observable } from "rxjs";
-import { observe } from "./observe";
+import { callback, observe } from "./observe";
 
 describe("observe", () => {
   describe("outside a constructor", () => {
@@ -107,6 +107,45 @@ describe("observe", () => {
       expect(calls).to.deep.equal([]);
       person.greet("Hi");
       expect(calls).to.deep.equal([["Hi"]]);
+    });
+  });
+
+  describe("added callbacks", () => {
+    class Component {
+      onDestroy$: Observable<[]>;
+      onInit$: Observable<[]>;
+      constructor() {
+        const { observables, proxy } = observe(this as Component, {
+          onDestroy: callback<() => void>(),
+          onInit: callback<() => void>()
+        });
+        this.onDestroy$ = observables.onDestroy;
+        this.onInit$ = observables.onInit;
+        return proxy;
+      }
+    }
+
+    it("should observe added methods", () => {
+      const component = new Component();
+
+      expect(Object.getOwnPropertyNames(component)).to.include("onInit");
+      expect(component.hasOwnProperty("onInit")).to.be.true;
+      expect("onInit" in component).to.be.true;
+      expect(component).to.have.property("onInit");
+
+      expect(Object.getOwnPropertyNames(component)).to.include("onDestroy");
+      expect(component.hasOwnProperty("onDestroy")).to.be.true;
+      expect("onDestroy" in component).to.be.true;
+      expect(component).to.have.property("onDestroy");
+
+      let initialized = false;
+      let destroyed = false;
+      component.onInit$.subscribe(() => initialized = true);
+      component.onDestroy$.subscribe(() => destroyed = true);
+      component["onInit"]();
+      component["onDestroy"]();
+      expect(initialized).to.be.true;
+      expect(destroyed).to.be.true;
     });
   });
 });
