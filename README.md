@@ -53,7 +53,7 @@ import { observe } from "rxjs-observe";
 class SomeComponent implements OnInit, OnDestroy {
   @Input() public name: string;
   constructor() {
-    const { observables, proxy } = observe<SomeComponent>(this);
+    const { observables, proxy } = observe(this as SomeComponent);
     observables.ngOnInit.pipe(
       switchMapTo(observables.name),
       takeUntil(observables.ngOnDestroy)
