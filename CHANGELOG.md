@@ -1,3 +1,10 @@
+<a name="2.1.0"></a>
+## [2.1.0](https://github.com/cartant/rxjs-observe/compare/v2.0.0...v2.1.0) (2019-04-21)
+
+### Features
+
+* Add proxy callbacks. ([f2b6bd5](https://github.com/cartant/rxjs-observe/commit/f2b6bd5))
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/cartant/rxjs-observe/compare/v1.0.2...v2.0.0) (2018-11-19)
 
