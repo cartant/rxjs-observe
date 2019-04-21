@@ -21,12 +21,13 @@ export function observe<T extends object, C extends object>(
     };
   proxy: T;
 } {
+  const defaultedCallbacks: {} = callbacks || {};
   const subjects = new Map<string | symbol, Subject<any>>();
   const proxy = new Proxy(instance, {
     get(target: any, name: string | symbol) {
       let value =
-        callbacks && callbacks.hasOwnProperty(name)
-          ? callbacks[name]
+        defaultedCallbacks[name] && !target[name]
+          ? defaultedCallbacks[name]
           : target[name];
       if (typeof value === "function") {
         const func = value;
@@ -42,19 +43,19 @@ export function observe<T extends object, C extends object>(
       return value;
     },
     getOwnPropertyDescriptor(target: any, name: string | symbol) {
-      if (callbacks && callbacks.hasOwnProperty(name)) {
-        return Object.getOwnPropertyDescriptor(callbacks, name);
-      }
-      return Object.getOwnPropertyDescriptor(target, name);
+      return (
+        Object.getOwnPropertyDescriptor(target, name) ||
+        Object.getOwnPropertyDescriptor(defaultedCallbacks, name)
+      );
     },
     has(target: any, name: string | symbol) {
-      if (callbacks && callbacks.hasOwnProperty(name)) {
-        return name in callbacks || name in target;
-      }
-      return name in target;
+      return name in target || name in defaultedCallbacks;
     },
     ownKeys(target: any) {
-      return [...Reflect.ownKeys(target), ...Reflect.ownKeys(callbacks || {})];
+      return [
+        ...Reflect.ownKeys(target),
+        ...Reflect.ownKeys(defaultedCallbacks)
+      ];
     },
     set(target: any, name: string | symbol, value: any) {
       target[name] = value;
@@ -73,7 +74,8 @@ export function observe<T extends object, C extends object>(
           let subject = subjects.get(name);
           if (!subject) {
             subject =
-              typeof instance[name] === "function"
+              typeof instance[name] === "function" ||
+              typeof defaultedCallbacks[name] === "function"
                 ? new Subject<any>()
                 : new BehaviorSubject<any>(instance[name]);
             subjects.set(name, subject);
