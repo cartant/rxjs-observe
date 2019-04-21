@@ -1,3 +1,10 @@
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/cartant/rxjs-observe/compare/v2.1.3...v2.1.4) (2019-04-22)
+
+### Changes
+
+* Export the `Observables` type. ([27fd8b3](https://github.com/cartant/rxjs-observe/commit/27fd8b3))
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/cartant/rxjs-observe/compare/v2.1.2...v2.1.3) (2019-04-21)
 
