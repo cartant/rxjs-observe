@@ -1,7 +1,14 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/cartant/rxjs-observe/compare/v2.1.1...v2.1.2) (2019-04-21)
+
+### Fixes
+
+* Add callbacks to proxy type. ([e19f466](https://github.com/cartant/rxjs-observe/commit/e19f466))
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/cartant/rxjs-observe/compare/v2.1.0...v2.1.1) (2019-04-21)
 
-### Features
+### Fixes
 
 * Don't override instance methods with proxy callbacks. ([156439b](https://github.com/cartant/rxjs-observe/commit/156439b))
 
