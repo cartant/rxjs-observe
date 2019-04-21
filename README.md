@@ -39,29 +39,43 @@ observables.name.subscribe(value => console.log(name));
 proxy.name = "Bob";
 ```
 
+`observe` can be passed optional callbacks that will be implemented in the proxy - the observed instance does not need to implement them - and forwarded to an observable with the same name:
+
+```ts
+import { callback, observe } from "rxjs-observe";
+
+const instance = { name: "Alice" };
+const { observables, proxy } = observe(instance, {
+  init: callback()
+});
+observables.init.subscribe(() => console.log("init"));
+proxy.init();
+```
+
 `observe` can be called inside a constructor and the `proxy` can be returned, as in this Angular component:
 
 ```ts
 import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { switchMapTo, takeUntil } from "rxjs/operators";
-import { observe } from "rxjs-observe";
+import { callback, observe } from "rxjs-observe";
 
 @Component({
   selector: "some-component",
   template: "<span>Some useless component that writes to the console</span>"
 })
-class SomeComponent implements OnInit, OnDestroy {
+class SomeComponent {
   @Input() public name: string;
   constructor() {
-    const { observables, proxy } = observe(this as SomeComponent);
+    const { observables, proxy } = observe(this as SomeComponent, {
+      ngOnInit: callback<OnInit>(),
+      ngOnDestroy: callback<OnDestroy>()
+    });
     observables.ngOnInit.pipe(
       switchMapTo(observables.name),
       takeUntil(observables.ngOnDestroy)
     ).subscribe(value => console.log(value));
     return proxy;
   }
-  ngOnInit() {}
-  ngOnDestroy() {}
 }
 ```
 

@@ -86,6 +86,6 @@ export function observe<T extends object, C extends object>(
   };
 }
 
-export function callback<T>(): T {
+export function callback<T = typeof noop>(): T {
   return noop as any;
 }
