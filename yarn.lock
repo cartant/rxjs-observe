@@ -40,12 +40,10 @@
   dependencies:
     tslint-etc "^1.3.1"
 
-"@cartant/tslint-config-rxjs@^1.0.2":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@cartant/tslint-config-rxjs/-/tslint-config-rxjs-1.0.3.tgz#4ccae768852d0d42658d8d81d1865c7de0bb6eb6"
-  integrity sha512-oj1NsNXcRXN800pnj/QfXX2oFC9KOYRD5JpZVafoOq/1D7nn033XeQw0GKeNNw5phgWIBWd/xqghhkJr8NacXQ==
-  dependencies:
-    rxjs-tslint-rules "^4.22.1"
+"@cartant/tslint-config-rxjs@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config-rxjs/-/tslint-config-rxjs-2.0.0.tgz#86ed50c97c1fcf90c335187188a257796ea014bb"
+  integrity sha512-5yAayR+lwVkCAzoWnMREa0tUFQWae7783g+L1cMFbiJi0GttH2QIOl+krx8/8klK58qp24iZ9GnmBlnIRCNCyA==
 
 "@cartant/tslint-config@^1.0.2":
   version "1.0.2"
@@ -4107,7 +4105,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs-tslint-rules@^4.0.0, rxjs-tslint-rules@^4.22.1:
+rxjs-tslint-rules@^4.0.0:
   version "4.22.1"
   resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.22.1.tgz#cdfc049d352410145b8f63b3d1a56e54f8db4395"
   integrity sha512-rbi18cHfXxmXx7zHqNKOY+cID7VHFaogwmcLnEx3X3CKMt9R1xgWgulglSOjo0ViP27nDyEOFDdJut5VgVn4JQ==
