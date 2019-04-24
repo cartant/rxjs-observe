@@ -47,10 +47,10 @@
   dependencies:
     rxjs-tslint-rules "^4.22.1"
 
-"@cartant/tslint-config@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-1.0.2.tgz#752ec5be5709685c336590d6346636895e568311"
-  integrity sha512-2y3tKjo8mwZlSeb5qhjPLXmD7muJTM4SJPne04Yv0HQGVSrMTPbgZlXa7jJjozAISDjIRQ+xkvkiBXi8IJA9Jg==
+"@cartant/tslint-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-2.0.0.tgz#2016f19d65399f41600b3f2d2393990977c2cc29"
+  integrity sha512-RZJxMfFRDeUwKCZPVBmjWKYQJqYrmbJbJInba/y2YvBIM9TJRfPJqv9ySGq/seHsnHawwGAgjeKleY0gM8xe3Q==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
