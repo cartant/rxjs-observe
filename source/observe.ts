@@ -78,7 +78,7 @@ export function observe<T extends object, C extends object>(
               typeof instance[name] === "function" ||
               typeof defaultedCallbacks[name] === "function"
                 ? new Subject<any>()
-                : new BehaviorSubject<any>(instance[name]);
+                : new BehaviorSubject(instance[name]);
             subjects.set(name, subject);
           }
           return subject.asObservable();
