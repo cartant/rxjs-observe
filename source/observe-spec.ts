@@ -140,8 +140,8 @@ describe("observe", () => {
 
       let initialized = false;
       let destroyed = false;
-      component.onInit$.subscribe(() => initialized = true);
-      component.onDestroy$.subscribe(() => destroyed = true);
+      component.onInit$.subscribe(() => (initialized = true));
+      component.onDestroy$.subscribe(() => (destroyed = true));
       component["onInit"]();
       component["onDestroy"]();
       expect(initialized).to.be.true;
@@ -151,14 +151,16 @@ describe("observe", () => {
     it("should not override instance methods", () => {
       const instance = {
         /*tslint:disable-next-line:no-invalid-this*/
-        init() { this.initialized = true; },
+        init() {
+          this.initialized = true;
+        },
         initialized: false
       };
       const { observables, proxy } = observe(instance, {
         init: callback()
       });
       let initialized = false;
-      observables.init.subscribe(() => initialized = true);
+      observables.init.subscribe(() => (initialized = true));
       proxy.init();
       expect(instance).to.have.property("initialized", true);
       expect(initialized).to.be.true;
