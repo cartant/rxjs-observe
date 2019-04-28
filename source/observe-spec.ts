@@ -150,8 +150,8 @@ describe("observe", () => {
 
     it("should not override instance methods", () => {
       const instance = {
-        /*tslint:disable-next-line:no-invalid-this*/
         init() {
+          /*tslint:disable-next-line:no-invalid-this*/
           this.initialized = true;
         },
         initialized: false
