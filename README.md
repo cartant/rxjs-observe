@@ -35,7 +35,7 @@ import { observe } from "rxjs-observe";
 
 const instance = { name: "Alice" };
 const { observables, proxy } = observe(instance);
-observables.name.subscribe(value => console.log(name));
+observables.name.subscribe(name => console.log(name));
 proxy.name = "Bob";
 ```
 
