@@ -33,7 +33,7 @@
     "tslint": "^5.1.0",
     "tslint-etc": "^1.2.0",
     "typescript": "~3.5.2",
-    "webpack": "^4.0.0",
+    "webpack": "^4.39.2",
     "webpack-cli": "^3.0.0",
     "webpack-rxjs-externals": "^2.0.0"
   },
