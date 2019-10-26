@@ -3,17 +3,17 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-observe
  */
 
-import { BehaviorSubject, noop, Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 export type Observables<T extends object, C extends object = {}> = {
   [K in keyof T]: T[K] extends (...args: infer U) => any
     ? Observable<U>
-    : Observable<T[K]>
+    : Observable<T[K]>;
 } &
   {
     [K in keyof C]: C[K] extends (...args: infer U) => any
       ? Observable<U>
-      : Observable<C[K]>
+      : Observable<C[K]>;
   };
 
 export function observe<T extends object, C extends object>(
@@ -23,40 +23,43 @@ export function observe<T extends object, C extends object>(
   observables: Observables<T, C>;
   proxy: T & C;
 } {
-  const defaultedCallbacks: {} = callbacks || {};
+  const fallbacks: {} = callbacks || {};
+  const functions = new Map<Function, Function>();
   const subjects = new Map<string | symbol, Subject<any>>();
   const proxy = new Proxy(instance, {
     get(target: any, name: string | symbol) {
-      const callbacksValue = defaultedCallbacks[name];
+      const fallbackValue = fallbacks[name];
       const targetValue = target[name];
-      let value = callbacksValue && !targetValue ? callbacksValue : targetValue;
+      let value = fallbackValue && !targetValue ? fallbackValue : targetValue;
       if (typeof value === "function") {
         const functionValue = value;
-        value = function(this: any, ...args: any[]): any {
-          const result = functionValue.apply(this, args);
-          const subject = subjects.get(name);
-          if (subject) {
-            subject.next(args);
-          }
-          return result;
-        };
+        let functionWrapper = functions.get(functionValue);
+        if (!functionWrapper) {
+          functionWrapper = function(this: any, ...args: any[]): any {
+            const result = functionValue.apply(this, args);
+            const subject = subjects.get(name);
+            if (subject) {
+              subject.next(args);
+            }
+            return result;
+          };
+          functions.set(functionValue, functionWrapper);
+        }
+        value = functionWrapper;
       }
       return value;
     },
     getOwnPropertyDescriptor(target: any, name: string | symbol) {
       return (
         Object.getOwnPropertyDescriptor(target, name) ||
-        Object.getOwnPropertyDescriptor(defaultedCallbacks, name)
+        Object.getOwnPropertyDescriptor(fallbacks, name)
       );
     },
     has(target: any, name: string | symbol) {
-      return name in target || name in defaultedCallbacks;
+      return name in target || name in fallbacks;
     },
     ownKeys(target: any) {
-      return [
-        ...Reflect.ownKeys(target),
-        ...Reflect.ownKeys(defaultedCallbacks)
-      ];
+      return [...Reflect.ownKeys(target), ...Reflect.ownKeys(fallbacks)];
     },
     set(target: any, name: string | symbol, value: any) {
       target[name] = value;
@@ -76,7 +79,7 @@ export function observe<T extends object, C extends object>(
           if (!subject) {
             subject =
               typeof instance[name] === "function" ||
-              typeof defaultedCallbacks[name] === "function"
+              typeof fallbacks[name] === "function"
                 ? new Subject<any>()
                 : new BehaviorSubject(instance[name]);
             subjects.set(name, subject);
@@ -89,6 +92,6 @@ export function observe<T extends object, C extends object>(
   };
 }
 
-export function callback<T = typeof noop>(): T {
-  return noop as any;
+export function callback<T extends Function>(): T {
+  return (() => {}) as any;
 }

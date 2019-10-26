@@ -67,6 +67,13 @@ describe("observe", () => {
       const { observables } = observe(person);
       observables[job].subscribe(value => expect(value).to.equal("engineer"));
     });
+
+    it("should return the same function for each property get", () => {
+      const person = new Person(32, "Alice");
+      const first = person.greet;
+      const second = person.greet;
+      expect(first).to.equal(second);
+    });
   });
 
   describe("inside a constructor", () => {
@@ -146,6 +153,13 @@ describe("observe", () => {
       component["onDestroy"]();
       expect(initialized).to.be.true;
       expect(destroyed).to.be.true;
+    });
+
+    it("should return the same function for each property get", () => {
+      const component = new Component();
+      const first = component["onInit"];
+      const second = component["onInit"];
+      expect(first).to.equal(second);
     });
 
     it("should not override instance methods", () => {
