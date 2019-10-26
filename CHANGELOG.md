@@ -1,3 +1,10 @@
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/cartant/rxjs-observe/compare/v2.1.4...v2.1.5) (2019-10-26)
+
+### Fixes
+
+* Ensure the same function is returned for each property get. ([f9a7936](https://github.com/cartant/rxjs-observe/commit/f9a7936))
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/cartant/rxjs-observe/compare/v2.1.3...v2.1.4) (2019-04-22)
 
