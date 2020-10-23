@@ -23,8 +23,8 @@ describe("observe", () => {
       const person = new Person(32, "Alice");
       const { observables, proxy } = observe(person);
       const values: (number | string)[] = [];
-      observables.age.subscribe(value => values.push(value));
-      observables.name.subscribe(value => values.push(value));
+      observables.age.subscribe((value) => values.push(value));
+      observables.name.subscribe((value) => values.push(value));
       expect(values).to.deep.equal([32, "Alice"]);
       proxy.age = 42;
       proxy.name = "Bob";
@@ -35,7 +35,7 @@ describe("observe", () => {
       const person = new Person(32, "Alice");
       const { observables, proxy } = observe(person);
       const calls: any[][] = [];
-      observables.greet.subscribe(args => calls.push(args));
+      observables.greet.subscribe((args) => calls.push(args));
       expect(calls).to.deep.equal([]);
       proxy.greet("Hi");
       expect(calls).to.deep.equal([["Hi"]]);
@@ -47,8 +47,8 @@ describe("observe", () => {
       proxy.age = 42;
       proxy.name = "Bob";
       const values: (number | string)[] = [];
-      observables.age.subscribe(value => values.push(value));
-      observables.name.subscribe(value => values.push(value));
+      observables.age.subscribe((value) => values.push(value));
+      observables.name.subscribe((value) => values.push(value));
       expect(values).to.deep.equal([42, "Bob"]);
     });
 
@@ -57,7 +57,7 @@ describe("observe", () => {
       const { observables, proxy } = observe(person);
       proxy.greet("Hi");
       const calls: any[][] = [];
-      observables.greet.subscribe(args => calls.push(args));
+      observables.greet.subscribe((args) => calls.push(args));
       expect(calls).to.deep.equal([]);
     });
 
@@ -65,7 +65,7 @@ describe("observe", () => {
       const person = new Person(32, "Alice");
       person[job] = "engineer";
       const { observables } = observe(person);
-      observables[job].subscribe(value => expect(value).to.equal("engineer"));
+      observables[job].subscribe((value) => expect(value).to.equal("engineer"));
     });
 
     it("should return the same function for each property get", () => {
@@ -98,8 +98,8 @@ describe("observe", () => {
       expect(person).to.have.property("age$");
       expect(person).to.have.property("name$");
       const values: (number | string)[] = [];
-      person.age$.subscribe(value => values.push(value));
-      person.name$.subscribe(value => values.push(value));
+      person.age$.subscribe((value) => values.push(value));
+      person.name$.subscribe((value) => values.push(value));
       expect(values).to.deep.equal([32, "Alice"]);
       person.age = 42;
       person.name = "Bob";
@@ -110,7 +110,7 @@ describe("observe", () => {
       const person = new Person(32, "Alice");
       expect(person).to.have.property("greet$");
       const calls: any[][] = [];
-      person.greet$.subscribe(args => calls.push(args));
+      person.greet$.subscribe((args) => calls.push(args));
       expect(calls).to.deep.equal([]);
       person.greet("Hi");
       expect(calls).to.deep.equal([["Hi"]]);
@@ -124,7 +124,7 @@ describe("observe", () => {
       constructor() {
         const { observables, proxy } = observe(this as Component, {
           onDestroy: callback<() => void>(),
-          onInit: callback<() => void>()
+          onInit: callback<() => void>(),
         });
         this.onDestroy$ = observables.onDestroy;
         this.onInit$ = observables.onInit;
@@ -168,10 +168,10 @@ describe("observe", () => {
           /*tslint:disable-next-line:no-invalid-this*/
           this.initialized = true;
         },
-        initialized: false
+        initialized: false,
       };
       const { observables, proxy } = observe(instance, {
-        init: callback()
+        init: callback(),
       });
       let initialized = false;
       observables.init.subscribe(() => (initialized = true));

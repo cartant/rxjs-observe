@@ -35,7 +35,7 @@ export function observe<T extends object, C extends object>(
         const functionValue = value;
         let functionWrapper = functions.get(functionValue);
         if (!functionWrapper) {
-          functionWrapper = function(this: any, ...args: any[]): any {
+          functionWrapper = function (this: any, ...args: any[]): any {
             const result = functionValue.apply(this, args);
             const subject = subjects.get(name);
             if (subject) {
@@ -68,7 +68,7 @@ export function observe<T extends object, C extends object>(
         subject.next(value);
       }
       return true;
-    }
+    },
   });
   return {
     observables: new Proxy(
@@ -85,10 +85,10 @@ export function observe<T extends object, C extends object>(
             subjects.set(name, subject);
           }
           return subject.asObservable();
-        }
+        },
       }
     ),
-    proxy
+    proxy,
   };
 }
 
